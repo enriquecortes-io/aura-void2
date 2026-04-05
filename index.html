@@ -612,8 +612,14 @@ footer{
 
 /* ── RESPONSIVE ── */
 @media(max-width:1100px){
-  .hero{grid-template-columns:1fr}
-  .hero-r{display:none}
+  .hero { position: relative; display: block; }
+  .hero-l { 
+    position: absolute; inset: 0; z-index: 2; 
+    background: linear-gradient(to top, var(--ink) 35%, rgba(6,6,8,0.4) 100%); 
+  }
+  .hero-r { 
+    display: flex; position: absolute; inset: 0; width: 100%; z-index: 1; 
+  }
   .nav-mid{display:none}
   .svc-grid{grid-template-columns:repeat(3,1fr)}
   .svc-card:nth-child(3){border-right:none}
