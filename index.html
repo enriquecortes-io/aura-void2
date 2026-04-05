@@ -27,11 +27,11 @@ body{
   color: var(--paper);
   font-family: var(--font-body);
   font-weight: 300;
-  overflow-x: hidden; 
+  overflow-x: clip; 
   cursor: none;
 }
 
-/* ── CURSOR (Solo escritorio) ── */
+/* ── CURSOR ── */
 #cur{
   position:fixed;z-index:9999;pointer-events:none;
   mix-blend-mode:difference;
@@ -93,7 +93,6 @@ nav.scrolled .nav-bg{background:rgba(6,6,8,.97);backdrop-filter:blur(16px)}
   display:grid;
   grid-template-columns:55% 45%;
   overflow:hidden;
-  position:relative;
 }
 .hero-l{
   position:relative;
@@ -173,7 +172,7 @@ nav.scrolled .nav-bg{background:rgba(6,6,8,.97);backdrop-filter:blur(16px)}
   width: 100%; 
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.4) saturate(0.5);
+  filter: brightness(0.35) saturate(0.4);
   display: block;
 }
 
@@ -303,4 +302,78 @@ nav.scrolled .nav-bg{background:rgba(6,6,8,.97);backdrop-filter:blur(16px)}
   font-size:1.1rem;color:var(--rust);
   animation:nudge 2s ease-in-out infinite;
 }
-@keyframes nudge{0%,100%{transform:translateY(
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+.drag-line{flex:1;height:1px;background:var(--line)}
+
+/* ── MANIFESTO ── */
+.manifesto{
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:80vh;
+}
+.man-img{position:relative;overflow:hidden}
+.man-img img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  filter:brightness(.42) saturate(.4);transition:filter 1.5s;
+}
+.man-img:hover img{filter:brightness(.52) saturate(.5)}
+.man-grad{position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,var(--ink))}
+.man-year{
+  position:absolute;bottom:3rem;left:3rem;
+  font-family:var(--font-title);font-size:6rem;
+  color:rgba(240,235,226,.05);line-height:1;user-select:none;
+}
+.man-content{
+  background:var(--ink);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:7rem 5rem 7rem 6rem;
+}
+.man-eyebrow{
+  font-size:.48rem;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--rust);margin-bottom:2rem;
+  display:flex;align-items:center;gap:.8rem;
+  font-family:var(--font-body);font-weight:400;
+}
+.man-eyebrow::before{content:'';width:24px;height:1px;background:var(--rust)}
+.man-big{
+  font-family:var(--font-display);
+  font-size:clamp(2rem,3.5vw,3.5rem);line-height:1.1;font-weight:400;
+  margin-bottom:2.5rem;
+}
+.man-big em{font-style:italic;color:var(--rust)}
+.man-body{
+  font-size:.7rem;line-height:2;color:var(--warm);
+  margin-bottom:3rem;max-width:400px;
+  font-family:var(--font-body);font-weight:300;
+}
+.man-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;
+  border-top:1px solid var(--line);padding-top:2.5rem;
+}
+.ms-n{
+  font-family:var(--font-display);
+  font-size:2.3rem;color:var(--paper);margin-bottom:.25rem;
+}
+.ms-l{
+  font-size:.44rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--warm);line-height:1.5;
+  font-family:var(--font-body);font-weight:300;
+}
+
+/* ── SERVICES ── */
+.services{padding:8rem 3rem}
+.svc-head{
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;
+  margin-bottom:4.5rem;align-items:end;
+}
+.svc-eyebrow{
+  font-size:.48rem;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--rust);margin-bottom:1rem;
+  font-family:var(--font-body);font-weight:400;
+}
+.svc-title{
+  font-family:var(--font-display);
+  font-size:clamp(2.5rem,4.5vw,5rem);line-height:.95;font-weight:400;
+}
+.svc-title em{font-style:italic}
+.svc-intro{
+  font-size:.7rem;line-height:2;
