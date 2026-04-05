@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -236,11 +235,10 @@ font-family:var(–font-body);font-weight:400;
 .port-all:hover{color:var(–rust)}
 
 .port-scroll{
-overflow-x:auto;overflow-y:hidden;
--webkit-overflow-scrolling:touch;
-scrollbar-width:none;cursor:none;
+overflow:hidden;
+cursor:none;
+width:100%;
 }
-.port-scroll::-webkit-scrollbar{display:none}
 .port-track{
 display:flex;gap:3px;
 padding:0 3rem;
@@ -660,8 +658,6 @@ body{cursor:auto}
 
 <div id="cur"></div>
 
-<!-- NAV -->
-
 <nav id="nav">
   <div class="nav-bg" id="navBg"></div>
   <a href="#" class="logo">
@@ -677,8 +673,6 @@ body{cursor:auto}
   <a href="https://wa.me/34600000000" class="nav-cta">Iniciar Proyecto</a>
 </nav>
 
-<!-- HERO -->
-
 <section class="hero">
   <div class="hero-l">
     <div class="hero-ghost">A&amp;V</div>
@@ -692,7 +686,6 @@ body{cursor:auto}
   </div>
 
   <div class="hero-r">
-    <!-- Row 1 -->
     <div class="reel-row">
       <div class="reel-inner">
         <div class="reel-cell" style="width:220px"><img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?w=440&auto=format&fit=crop" alt=""></div>
@@ -700,7 +693,6 @@ body{cursor:auto}
         <div class="reel-cell" style="width:240px"><img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?w=480&auto=format&fit=crop" alt=""></div>
         <div class="reel-cell" style="width:190px"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=380&auto=format&fit=crop" alt=""></div>
         <div class="reel-cell" style="width:210px"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=420&auto=format&fit=crop" alt=""></div>
-        <!-- duplicate for seamless loop -->
         <div class="reel-cell" style="width:220px"><img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?w=440&auto=format&fit=crop" alt=""></div>
         <div class="reel-cell" style="width:180px"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=360&auto=format&fit=crop" alt=""></div>
         <div class="reel-cell" style="width:240px"><img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?w=480&auto=format&fit=crop" alt=""></div>
@@ -708,7 +700,6 @@ body{cursor:auto}
         <div class="reel-cell" style="width:210px"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=420&auto=format&fit=crop" alt=""></div>
       </div>
     </div>
-    <!-- Row 2 -->
     <div class="reel-row">
       <div class="reel-inner">
         <div class="reel-cell" style="width:200px"><img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?w=400&auto=format&fit=crop" alt=""></div>
@@ -721,7 +712,6 @@ body{cursor:auto}
         <div class="reel-cell" style="width:220px"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=440&auto=format&fit=crop" alt=""></div>
       </div>
     </div>
-    <!-- Row 3 -->
     <div class="reel-row">
       <div class="reel-inner">
         <div class="reel-cell" style="width:230px"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=460&auto=format&fit=crop" alt=""></div>
@@ -736,8 +726,6 @@ body{cursor:auto}
     </div>
   </div>
 </section>
-
-<!-- TICKER -->
 
 <div class="ticker">
   <div class="ticker-inner">
@@ -760,8 +748,6 @@ body{cursor:auto}
   </div>
 </div>
 
-<!-- PORTFOLIO -->
-
 <section class="portfolio" id="portfolio">
   <div class="port-head rv">
     <div>
@@ -774,7 +760,6 @@ body{cursor:auto}
   <div class="port-scroll" id="portScroll">
     <div class="port-track" id="portTrack">
 
-```
   <div class="pi">
     <img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?q=85&w=1000&auto=format&fit=crop" alt="Villa Meridiana">
     <div class="pi-always">
@@ -878,188 +863,4 @@ body{cursor:auto}
   </div>
 
   <div class="pi">
-    <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=85&w=850&auto=format&fit=crop" alt="Torre Cimbre">
-    <div class="pi-always">
-      <span class="pi-idx">06 / 06</span>
-      <div class="pi-bottom">
-        <p class="pi-tag">Valencia · Promoción Nueva</p>
-        <h3 class="pi-name">Torre Cimbre</h3>
-        <p class="pi-loc">Ciudad de las Artes, Valencia</p>
-      </div>
-    </div>
-    <div class="pi-hover">
-      <div class="pi-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-      <div class="pi-pills">
-        <span class="pi-pill">AI Video</span>
-        <span class="pi-pill">Infoarquitectura</span>
-        <span class="pi-pill">Campaña Digital</span>
-      </div>
-    </div>
-  </div>
-
-</div>
-```
-
-  </div>
-
-  <div class="drag-cue rv">
-    <span>Arrastra para explorar</span>
-    <span class="drag-arrow">→</span>
-    <div class="drag-line"></div>
-  </div>
-</section>
-
-<!-- MANIFESTO -->
-
-<section class="manifesto">
-  <div class="man-img">
-    <img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?q=85&w=1000&auto=format&fit=crop" alt="">
-    <div class="man-grad"></div>
-    <div class="man-year">2018</div>
-  </div>
-  <div class="man-content">
-    <p class="man-eyebrow rv">Quiénes Somos</p>
-    <h2 class="man-big rv">Donde el inmobiliario<br>de lujo encuentra<br>su <em>historia.</em></h2>
-    <p class="man-body rv">AURA &amp; VOID nació de una convicción: el mercado de lujo no se gana con datos. Se gana con emoción, narrativa e imágenes que paran el tiempo. Somos un laboratorio de producción y estrategia que combina cinematografía de alta gama, inteligencia artificial y campañas de precisión milimétrica para posicionar propiedades extraordinarias ante los compradores exactos que las merecen.</p>
-    <div class="man-stats rv d2">
-      <div><p class="ms-n">+€2B</p><p class="ms-l">En activos posicionados</p></div>
-      <div><p class="ms-n">340+</p><p class="ms-l">Proyectos completados</p></div>
-      <div><p class="ms-n">12</p><p class="ms-l">Mercados activos</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- SERVICES -->
-
-<section class="services" id="servicios">
-  <div class="svc-head">
-    <div>
-      <p class="svc-eyebrow rv">Lo Que Hacemos</p>
-      <h2 class="svc-title rv">Nuestros <em>Servicios</em></h2>
-    </div>
-    <p class="svc-intro rv">Cada propiedad es una historia diferente. Diseñamos la estrategia, producimos el contenido y activamos las campañas — todo bajo un mismo techo, con un único objetivo: vender más rápido y a mejor precio.</p>
-  </div>
-  <div class="svc-grid rv">
-    <div class="svc-card"><div class="svc-top-line"></div><span class="svc-n">01</span><span class="svc-ico">◈</span><h3 class="svc-name">Producción Audiovisual</h3><ul class="svc-ul"><li>Lifestyle &amp; Narrativa Visual</li><li>Fotografía Arquitectónica</li><li>VR &amp; Virtual Tours 360°</li><li>Renders 3D e Infoarquitectura</li></ul></div>
-    <div class="svc-card"><div class="svc-top-line"></div><span class="svc-n">02</span><span class="svc-ico">◎</span><h3 class="svc-name">Precision Marketing</h3><ul class="svc-ul"><li>Campañas Hipersegmentadas</li><li>Publicidad Programática</li><li>Geo-fencing Premium</li><li>SEO &amp; SEM Performance</li></ul></div>
-    <div class="svc-card"><div class="svc-top-line"></div><span class="svc-n">03</span><span class="svc-ico">◆</span><h3 class="svc-name">IA &amp; Automatización</h3><ul class="svc-ul"><li>Optimización con IA</li><li>AI Video Creation</li><li>Marketing Automation</li><li>Predictive Analytics</li></ul></div>
-    <div class="svc-card"><div class="svc-top-line"></div><span class="svc-n">04</span><span class="svc-ico">◉</span><h3 class="svc-name">Branding &amp; Digital PR</h3><ul class="svc-ul"><li>Storytelling &amp; Narrativa</li><li>Diseño Web Inmersivo</li><li>Redes Sociales Premium</li><li>Relaciones Públicas</li></ul></div>
-    <div class="svc-card"><div class="svc-top-line"></div><span class="svc-n">05</span><span class="svc-ico">◇</span><h3 class="svc-name">Physical &amp; Events</h3><ul class="svc-ul"><li>Catálogos de Lujo</li><li>Open Houses Premium</li><li>Eventos Inmobiliarios</li><li>Material de Ventas</li></ul></div>
-  </div>
-</section>
-
-<!-- PROCESS -->
-
-<section class="process" id="proceso">
-  <p class="proc-eyebrow rv">Cómo Trabajamos</p>
-  <h2 class="proc-title rv">El <em>proceso</em><br>que genera resultados.</h2>
-  <div class="proc-grid">
-    <div class="proc-step rv"><div class="proc-dot"></div><div class="proc-num">01</div><h3 class="proc-name">Diagnóstico Estratégico</h3><p class="proc-desc">Analizamos la propiedad, el mercado objetivo y la brecha entre percepción actual y potencial de deseo. Definimos el arquetipo exacto del comprador ideal.</p></div>
-    <div class="proc-step rv d1"><div class="proc-dot"></div><div class="proc-num">02</div><h3 class="proc-name">Arquitectura Narrativa</h3><p class="proc-desc">Construimos la historia de la propiedad. No sus metros cuadrados. Su estilo de vida. La promesa emocional que activa en el comprador correcto.</p></div>
-    <div class="proc-step rv d2"><div class="proc-dot"></div><div class="proc-num">03</div><h3 class="proc-name">Producción &amp; Activación</h3><p class="proc-desc">Producción audiovisual cinematográfica. Lanzamiento simultáneo en todos los canales premium. Campañas de precisión activadas desde el día uno.</p></div>
-    <div class="proc-step rv d3"><div class="proc-dot"></div><div class="proc-num">04</div><h3 class="proc-name">Optimización Continua</h3><p class="proc-desc">IA y data analytics en tiempo real. Ajustamos, escalamos y refinamos hasta que el comprador correcto no pueda resistirse a dar el paso.</p></div>
-  </div>
-</section>
-
-<!-- TESTIMONIAL -->
-
-<section class="testimonial rv">
-  <div class="test-side">Clientes</div>
-  <div>
-    <blockquote class="test-q">AURA &amp; VOID no solo vendió nuestra promoción — redefinió cómo el mercado la percibía. El precio final superó en un 23% nuestras previsiones más optimistas.</blockquote>
-    <div class="test-who">
-      <div class="test-line"></div>
-      <div>
-        <p class="test-name">Santiago Morales-Vega</p>
-        <p class="test-role">Director Comercial · Grupo Residencial Altavista</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-
-<section class="cta" id="contacto">
-  <div class="cta-bg"><img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?q=80&w=1600&auto=format&fit=crop" alt=""></div>
-  <div class="cta-l rv">
-    <p class="cta-eyebrow">Empecemos</p>
-    <h2 class="cta-title">Su propiedad<br>merece ser<br><em>deseada.</em></h2>
-  </div>
-  <div class="cta-r rv d2">
-    <p class="cta-body">Trabajamos con un número limitado de proyectos cada trimestre para garantizar excelencia absoluta. Si tiene una propiedad o desarrollo que merece posicionamiento de primer nivel mundial, queremos conocerlo.</p>
-    <div class="cta-actions">
-      <a href="https://wa.me/34600000000?text=Hola,%20me%20gustar%C3%ADa%20informaci%C3%B3n%20sobre%20Aura%20%26%20Void" class="cta-wa">↗ Hablar por WhatsApp</a>
-      <a href="mailto:hola@auravoid.com" class="cta-em">hola@auravoid.com →</a>
-    </div>
-    <p class="cta-note">Plazas limitadas por trimestre. Actualmente aceptando proyectos para Q3 2026.</p>
-  </div>
-</section>
-
-<!-- FOOTER -->
-
-<footer>
-  <div>
-    <div class="ft-logo-main">AURA &amp; VOID</div>
-    <div class="ft-logo-sub">Laboratorio Audiovisual Inmobiliario</div>
-    <p class="ft-tagline">Ingeniería psicológica al servicio del inmobiliario de lujo.</p>
-  </div>
-  <div>
-    <p class="ft-col-title">Navegación</p>
-    <ul class="ft-links">
-      <li><a href="#portfolio">Portfolio</a></li>
-      <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#proceso">Proceso</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
-  </div>
-  <div>
-    <p class="ft-col-title">Contacto</p>
-    <ul class="ft-links">
-      <li><a href="mailto:hola@auravoid.com">hola@auravoid.com</a></li>
-      <li><a href="https://wa.me/34600000000">WhatsApp</a></li>
-      <li><a href="#">Instagram</a></li>
-      <li><a href="#">LinkedIn</a></li>
-    </ul>
-  </div>
-  <div class="ft-copy">© 2026 AURA &amp; VOID<br>Todos los derechos reservados.</div>
-</footer>
-
-<script>
-// CURSOR
-const cur=document.getElementById('cur');
-document.addEventListener('mousemove',e=>{
-  cur.style.left=e.clientX+'px';
-  cur.style.top=e.clientY+'px';
-},{passive:true});
-document.querySelectorAll('a,button,.pi,.svc-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
-  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
-});
-
-// NAV scroll
-window.addEventListener('scroll',()=>{
-  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>80);
-},{passive:true});
-
-// SCROLL REVEAL
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}});
-},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
-document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
-
-// PORTFOLIO DRAG
-const ps=document.getElementById('portScroll');
-let dragging=false,sx=0,sl=0;
-ps.addEventListener('mousedown',e=>{dragging=true;sx=e.pageX-ps.offsetLeft;sl=ps.scrollLeft;ps.style.cursor='grabbing'});
-document.addEventListener('mouseup',()=>{dragging=false;ps.style.cursor='none'});
-document.addEventListener('mousemove',e=>{
-  if(!dragging)return;
-  e.preventDefault();
-  ps.scrollLeft=sl-(e.pageX-ps.offsetLeft-sx)*1.2;
-},{passive:false});
-ps.addEventListener('touchstart',e=>{sx=e.touches[0].pageX;sl=ps.scrollLeft},{passive:true});
-ps.addEventListener('touchmove',e=>{ps.scrollLeft=sl-(e.touches[0].pageX-sx)*1.1},{passive:true});
-</script>
-
-</body>
-</html>
+    <img src="https://images.unsplash.com/photo-160060768
