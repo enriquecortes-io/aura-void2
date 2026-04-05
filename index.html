@@ -5,264 +5,653 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AURA & VOID — Laboratorio Audiovisual Inmobiliario</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,200;0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@200;300;400&display=swap');
+
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
 :root{
-  --ink:#060608;
-  --paper:#F0EBE2;
-  --rust:#C4432A;
-  --rust-dim:rgba(196,67,42,.5);
-  --sand:#D4C5A9;
-  --warm:#8A8070;
-  --line:rgba(212,197,169,.15);
+–ink:#060608;
+–paper:#F0EBE2;
+–rust:#C4432A;
+–sand:#D4C5A9;
+–warm:#8A8070;
+–line:rgba(212,197,169,.15);
+–font-display:‘DM Serif Display’,Georgia,‘Times New Roman’,Times,serif;
+–font-title:‘Bebas Neue’,Impact,sans-serif;
+–font-body:‘DM Sans’,‘Helvetica Neue’,Helvetica,Arial,sans-serif;
 }
+
 html{scroll-behavior:smooth}
-body{background:var(--ink);color:var(--paper);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+body{
+background:var(–ink);
+color:var(–paper);
+font-family:var(–font-body);
+font-weight:300;
+overflow-x:hidden;
+cursor:none;
+}
 
-/* CURSOR */
-#cur{position:fixed;z-index:9999;pointer-events:none;mix-blend-mode:difference;width:14px;height:14px;background:var(–paper);border-radius:50%;transform:translate(-50%,-50%);transition:width .3s cubic-bezier(.16,1,.3,1),height .3s cubic-bezier(.16,1,.3,1)}
-#cur.expand{width:72px;height:72px}
-#cur-txt{position:fixed;z-index:9998;pointer-events:none;font-size:.42rem;letter-spacing:.25em;text-transform:uppercase;transform:translate(-50%,-50%);color:var(–ink);opacity:0;transition:opacity .25s;font-weight:400}
-#cur.expand + #cur-txt{opacity:1}
+/* ── CURSOR ── */
+#cur{
+position:fixed;z-index:9999;pointer-events:none;
+mix-blend-mode:difference;
+width:14px;height:14px;
+background:var(–paper);border-radius:50%;
+transform:translate(-50%,-50%);
+transition:width .3s,height .3s;
+}
+#cur.big{width:70px;height:70px}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;justify-content:space-between;align-items:center;padding:1.6rem 3rem}
-.nav-bg{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,6,8,.92) 0%,transparent 100%);pointer-events:none}
-.logo{position:relative;z-index:1;text-decoration:none;display:flex;flex-direction:column;line-height:1}
-.logo-main{font-family:‘Bebas Neue’,sans-serif;font-size:1.5rem;letter-spacing:.15em;color:var(–paper)}
-.logo-sub{font-size:.38rem;letter-spacing:.3em;text-transform:uppercase;color:var(–rust);font-weight:400;margin-top:1px}
-.nav-center{position:absolute;left:50%;transform:translateX(-50%);z-index:1;display:flex;gap:2.5rem}
-.nav-link{font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(–warm);text-decoration:none;transition:color .3s}
+/* ── NAV ── */
+nav{
+position:fixed;top:0;left:0;right:0;z-index:600;
+display:flex;justify-content:space-between;align-items:center;
+padding:1.6rem 3rem;
+}
+.nav-bg{
+position:absolute;inset:0;
+background:linear-gradient(to bottom,rgba(6,6,8,.93) 0%,transparent 100%);
+pointer-events:none;
+transition:background .4s;
+}
+nav.scrolled .nav-bg{background:rgba(6,6,8,.97);backdrop-filter:blur(16px)}
+.logo{
+position:relative;z-index:1;text-decoration:none;
+display:flex;flex-direction:column;line-height:1;
+}
+.logo-main{
+font-family:var(–font-title);
+font-size:1.5rem;letter-spacing:.15em;color:var(–paper);
+}
+.logo-sub{
+font-size:.38rem;letter-spacing:.28em;text-transform:uppercase;
+color:var(–rust);font-weight:400;margin-top:2px;
+font-family:var(–font-body);
+}
+.nav-mid{
+position:absolute;left:50%;transform:translateX(-50%);
+z-index:1;display:flex;gap:2.5rem;
+}
+.nav-link{
+font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;
+color:var(–warm);text-decoration:none;transition:color .3s;
+font-family:var(–font-body);font-weight:400;
+}
 .nav-link:hover{color:var(–paper)}
-.nav-right{position:relative;z-index:1}
-.nav-cta{font-size:.48rem;letter-spacing:.22em;text-transform:uppercase;color:var(–ink);background:var(–rust);padding:.65rem 1.5rem;text-decoration:none;transition:background .3s}
+.nav-cta{
+position:relative;z-index:1;
+font-size:.48rem;letter-spacing:.22em;text-transform:uppercase;
+color:var(–ink);background:var(–rust);
+padding:.65rem 1.5rem;text-decoration:none;
+transition:background .3s;font-family:var(–font-body);font-weight:400;
+}
 .nav-cta:hover{background:#D94E34}
 
-/* ─────────────── HERO ─────────────────────────── */
-.hero{height:100svh;display:grid;grid-template-columns:55% 45%;overflow:hidden}
-.hero-l{position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:8rem 3rem 5rem;z-index:2;overflow:hidden}
-.hero-big-num{position:absolute;font-family:‘Bebas Neue’,sans-serif;font-size:28vw;line-height:.8;color:rgba(196,67,42,.05);top:50%;left:-1rem;transform:translateY(-50%);user-select:none;pointer-events:none}
-.h-eyebrow{font-size:.5rem;letter-spacing:.35em;text-transform:uppercase;color:var(–rust);margin-bottom:2rem;display:flex;align-items:center;gap:.8rem;opacity:0;animation:rise .8s .4s forwards}
-.h-eyebrow::before{content:’’;width:28px;height:1px;background:var(–rust)}
-.hero-h1{font-family:‘DM Serif Display’,serif;font-size:clamp(3rem,5.5vw,6rem);line-height:.95;font-weight:400;margin-bottom:2.5rem;letter-spacing:-.01em;opacity:0;animation:rise .9s .6s forwards}
+/* ── HERO ── */
+.hero{
+width:100%;height:100vh;
+display:grid;
+grid-template-columns:55% 45%;
+overflow:hidden;
+}
+.hero-l{
+position:relative;
+display:flex;flex-direction:column;justify-content:flex-end;
+padding:8rem 3rem 5rem;z-index:2;overflow:hidden;
+background:var(–ink);
+}
+.hero-ghost{
+position:absolute;
+font-family:var(–font-title);
+font-size:26vw;line-height:.8;
+color:rgba(196,67,42,.04);
+top:50%;left:-1rem;
+transform:translateY(-50%);
+user-select:none;pointer-events:none;
+white-space:nowrap;
+}
+.hero-eyebrow{
+font-size:.5rem;letter-spacing:.35em;text-transform:uppercase;
+color:var(–rust);margin-bottom:1.8rem;
+display:flex;align-items:center;gap:.8rem;
+font-family:var(–font-body);font-weight:400;
+opacity:0;animation:rise .8s .3s both;
+}
+.hero-eyebrow::before{content:’’;width:28px;height:1px;background:var(–rust)}
+.hero-h1{
+font-family:var(–font-display);
+font-size:clamp(2.8rem,5.2vw,5.8rem);
+line-height:.95;font-weight:400;letter-spacing:-.01em;
+margin-bottom:2rem;
+opacity:0;animation:rise .9s .5s both;
+}
 .hero-h1 em{font-style:italic;color:var(–rust)}
-.hero-p{font-size:.72rem;line-height:1.9;color:var(–warm);max-width:380px;margin-bottom:3rem;opacity:0;animation:rise .9s .8s forwards}
-.hero-btns{display:flex;gap:1.5rem;align-items:center;opacity:0;animation:rise .9s 1s forwards}
-.btn-main{display:inline-flex;align-items:center;gap:.6rem;font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:var(–paper);background:var(–rust);padding:.9rem 2rem;text-decoration:none;transition:background .3s}
+.hero-p{
+font-size:.73rem;line-height:1.9;color:var(–warm);
+max-width:380px;margin-bottom:2.8rem;
+font-family:var(–font-body);font-weight:300;
+opacity:0;animation:rise .9s .7s both;
+}
+.hero-btns{
+display:flex;gap:1.5rem;align-items:center;
+opacity:0;animation:rise .9s .9s both;
+}
+.btn-main{
+display:inline-flex;align-items:center;gap:.6rem;
+font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;
+color:var(–paper);background:var(–rust);
+padding:.9rem 2rem;text-decoration:none;transition:background .3s;
+font-family:var(–font-body);font-weight:400;
+}
 .btn-main:hover{background:#D94E34}
-.btn-ghost{font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(–warm);text-decoration:none;display:flex;align-items:center;gap:.5rem;transition:color .3s}
-.btn-ghost span{transition:transform .3s}
+.btn-ghost{
+font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;
+color:var(–warm);text-decoration:none;
+display:flex;align-items:center;gap:.5rem;transition:color .3s;
+font-family:var(–font-body);font-weight:400;
+}
 .btn-ghost:hover{color:var(–paper)}
-.btn-ghost:hover span{transform:translateX(4px)}
 
-/* Hero Right – live reel strips */
-.hero-r{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:3px;background:var(–ink)}
-.reel-row{display:flex;gap:3px;flex:1;overflow:hidden}
-.reel-row:nth-child(1) .reel-inner{animation:reel1 20s linear infinite}
-.reel-row:nth-child(2) .reel-inner{animation:reel2 26s linear infinite}
-.reel-row:nth-child(3) .reel-inner{animation:reel1 17s linear infinite}
-.reel-inner{display:flex;gap:3px;width:max-content}
-@keyframes reel1{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes reel2{from{transform:translateX(-50%)}to{transform:translateX(0)}}
-.reel-cell{flex-shrink:0;overflow:hidden;position:relative}
-.reel-cell img{width:100%;height:100%;object-fit:cover;filter:brightness(.5) saturate(.55)}
-/* film holes overlay */
-.hero-r::before,.hero-r::after{content:’’;position:absolute;top:0;bottom:0;width:28px;background:repeating-linear-gradient(180deg,var(–ink) 0,var(–ink) 12px,transparent 12px,transparent 22px);z-index:5;opacity:.9}
+/* Hero right – animated reel */
+.hero-r{
+position:relative;height:100vh;
+display:flex;flex-direction:column;gap:3px;
+background:var(–ink);overflow:hidden;
+}
+/* film sprocket holes */
+.hero-r::before,.hero-r::after{
+content:’’;position:absolute;top:0;bottom:0;width:26px;
+background:repeating-linear-gradient(
+180deg,
+var(–ink) 0,var(–ink) 12px,
+rgba(255,255,255,.03) 12px,rgba(255,255,255,.03) 20px
+);
+z-index:5;
+}
 .hero-r::before{left:0}
 .hero-r::after{right:0}
 
-@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.reel-row{flex:1;overflow:hidden;display:flex}
+.reel-inner{
+display:flex;gap:3px;
+height:100%;width:max-content;
+}
+.reel-row:nth-child(1) .reel-inner{animation:reel-fwd 20s linear infinite}
+.reel-row:nth-child(2) .reel-inner{animation:reel-bwd 24s linear infinite}
+.reel-row:nth-child(3) .reel-inner{animation:reel-fwd 17s linear infinite}
+@keyframes reel-fwd{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes reel-bwd{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 
-/* ─────────────── TICKER ───────────────────────── */
-.ticker{background:var(–rust);padding:.65rem 0;overflow:hidden;border-top:2px solid rgba(255,255,255,.1)}
+.reel-cell{
+flex-shrink:0;height:100%;overflow:hidden;
+}
+.reel-cell img{
+width:100%;height:100%;
+object-fit:cover;
+filter:brightness(.45) saturate(.5);
+display:block;
+}
+
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── TICKER ── */
+.ticker{
+background:var(–rust);padding:.65rem 0;
+overflow:hidden;border-top:2px solid rgba(255,255,255,.08);
+}
 .ticker-inner{display:flex;animation:tick 22s linear infinite;white-space:nowrap}
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.t-item{font-family:‘Bebas Neue’,sans-serif;font-size:.95rem;letter-spacing:.18em;color:var(–ink);flex-shrink:0;padding:0 1.5rem}
+.t-item{
+font-family:var(–font-title);
+font-size:.95rem;letter-spacing:.18em;color:var(–ink);
+flex-shrink:0;padding:0 1.5rem;
+}
 .t-sep{color:rgba(6,6,8,.25)}
 
-/* ─────────────── PORTFOLIO ────────────────────── */
+/* ── PORTFOLIO ── */
 .portfolio{padding:6rem 0 0}
-.port-head{padding:0 3rem 4rem;display:flex;justify-content:space-between;align-items:flex-end}
-.port-title-block{}
-.port-eyebrow{font-size:.48rem;letter-spacing:.35em;text-transform:uppercase;color:var(–rust);margin-bottom:1.2rem}
-.port-title{font-family:‘DM Serif Display’,serif;font-size:clamp(2.5rem,4.5vw,5rem);line-height:.95;font-weight:400}
+.port-head{
+padding:0 3rem 3.5rem;
+display:flex;justify-content:space-between;align-items:flex-end;
+}
+.port-eyebrow{
+font-size:.48rem;letter-spacing:.35em;text-transform:uppercase;
+color:var(–rust);margin-bottom:1rem;
+font-family:var(–font-body);font-weight:400;
+}
+.port-title{
+font-family:var(–font-display);
+font-size:clamp(2.4rem,4.5vw,5rem);
+line-height:.95;font-weight:400;
+}
 .port-title em{font-style:italic}
-.port-all{font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:var(–warm);text-decoration:none;display:flex;align-items:center;gap:.5rem;transition:color .3s;align-self:flex-end;padding-bottom:.3rem}
+.port-all{
+font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;
+color:var(–warm);text-decoration:none;
+display:flex;align-items:center;gap:.5rem;
+transition:color .3s;align-self:flex-end;padding-bottom:.3rem;
+font-family:var(–font-body);font-weight:400;
+}
 .port-all:hover{color:var(–rust)}
 
-/* Horizontal drag scroll */
-.port-scroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;cursor:none}
+.port-scroll{
+overflow-x:auto;overflow-y:hidden;
+-webkit-overflow-scrolling:touch;
+scrollbar-width:none;cursor:none;
+}
 .port-scroll::-webkit-scrollbar{display:none}
-.port-track{display:flex;gap:3px;padding:0 3rem 0;width:max-content}
+.port-track{
+display:flex;gap:3px;
+padding:0 3rem;
+width:max-content;
+}
 
-.pi{flex-shrink:0;position:relative;overflow:hidden;cursor:none}
-.pi:nth-child(1){width:560px;height:720px}
-.pi:nth-child(2){width:380px;height:720px}
-.pi:nth-child(3){width:460px;height:720px}
-.pi:nth-child(4){width:340px;height:720px}
-.pi:nth-child(5){width:500px;height:720px}
-.pi:nth-child(6){width:400px;height:720px}
+/* portfolio items — explicit widths AND heights */
+.pi{flex-shrink:0;position:relative;overflow:hidden;cursor:none;height:680px}
+.pi:nth-child(1){width:540px}
+.pi:nth-child(2){width:370px}
+.pi:nth-child(3){width:460px}
+.pi:nth-child(4){width:330px}
+.pi:nth-child(5){width:500px}
+.pi:nth-child(6){width:390px}
 
-.pi img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.16,1,.3,1),filter .6s}
-.pi:hover img{transform:scale(1.05);filter:brightness(.22) saturate(.3)}
-.pi-always{position:absolute;inset:0;padding:2rem;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(to top,rgba(6,6,8,.85) 0%,rgba(6,6,8,.1) 45%,transparent 70%)}
-.pi-idx{font-family:‘Bebas Neue’,sans-serif;font-size:.75rem;letter-spacing:.2em;color:var(–rust)}
+.pi img{
+width:100%;height:100%;object-fit:cover;display:block;
+transition:transform .9s cubic-bezier(.16,1,.3,1),filter .6s;
+}
+.pi:hover img{transform:scale(1.05);filter:brightness(.2) saturate(.3)}
+
+.pi-always{
+position:absolute;inset:0;
+padding:2rem;
+display:flex;flex-direction:column;justify-content:space-between;
+background:linear-gradient(to top,rgba(6,6,8,.88) 0%,rgba(6,6,8,.08) 50%,transparent 70%);
+}
+.pi-idx{
+font-family:var(–font-title);
+font-size:.75rem;letter-spacing:.2em;color:var(–rust);
+}
 .pi-bottom{}
-.pi-tag{font-size:.42rem;letter-spacing:.25em;text-transform:uppercase;color:var(–sand);margin-bottom:.6rem}
-.pi-name{font-family:‘DM Serif Display’,serif;font-size:1.9rem;font-weight:400;line-height:1.05;margin-bottom:.4rem}
-.pi:nth-child(1) .pi-name{font-size:2.6rem}
-.pi-loc{font-size:.46rem;letter-spacing:.18em;text-transform:uppercase;color:var(–warm)}
-/* hover reveal */
-.pi-hover{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.8rem;opacity:0;transition:opacity .4s;padding:2rem}
+.pi-tag{
+font-size:.42rem;letter-spacing:.25em;text-transform:uppercase;
+color:var(–sand);margin-bottom:.6rem;
+font-family:var(–font-body);font-weight:400;
+}
+.pi-name{
+font-family:var(–font-display);
+font-size:1.9rem;font-weight:400;line-height:1.05;margin-bottom:.4rem;
+}
+.pi:nth-child(1) .pi-name,.pi:nth-child(3) .pi-name{font-size:2.4rem}
+.pi-loc{
+font-size:.44rem;letter-spacing:.18em;text-transform:uppercase;
+color:var(–warm);font-family:var(–font-body);font-weight:300;
+}
+
+.pi-hover{
+position:absolute;inset:0;
+display:flex;flex-direction:column;
+align-items:center;justify-content:center;gap:1.8rem;
+opacity:0;transition:opacity .4s;padding:2rem;
+}
 .pi:hover .pi-hover{opacity:1}
-.pi-play{width:68px;height:68px;border:1px solid rgba(240,235,226,.35);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:border-color .3s,transform .3s}
-.pi-play:hover{border-color:var(–rust);transform:scale(1.08)}
+.pi-play{
+width:66px;height:66px;
+border:1px solid rgba(240,235,226,.35);border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+transition:border-color .3s,transform .3s;
+}
+.pi-play:hover{border-color:var(–rust);transform:scale(1.1)}
 .pi-play svg{width:18px;height:18px;fill:var(–paper);margin-left:3px}
 .pi-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem;max-width:280px}
-.pi-pill{font-size:.4rem;letter-spacing:.15em;text-transform:uppercase;color:var(–rust);border:1px solid rgba(196,67,42,.45);padding:.28rem .7rem}
+.pi-pill{
+font-size:.4rem;letter-spacing:.15em;text-transform:uppercase;
+color:var(–rust);border:1px solid rgba(196,67,42,.4);padding:.28rem .7rem;
+font-family:var(–font-body);font-weight:400;
+}
 
-/* drag cue */
-.drag-cue{padding:1.8rem 3rem 4rem;display:flex;align-items:center;gap:1.2rem}
-.drag-cue span{font-size:.46rem;letter-spacing:.22em;text-transform:uppercase;color:var(–warm)}
-.drag-arrow{font-size:1.2rem;color:var(–rust);animation:nudge 2s ease-in-out infinite}
+.drag-cue{
+padding:1.5rem 3rem 4rem;
+display:flex;align-items:center;gap:1rem;
+}
+.drag-cue span{
+font-size:.46rem;letter-spacing:.22em;text-transform:uppercase;
+color:var(–warm);font-family:var(–font-body);
+}
+.drag-arrow{
+font-size:1.1rem;color:var(–rust);
+animation:nudge 2s ease-in-out infinite;
+}
 @keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
 .drag-line{flex:1;height:1px;background:var(–line)}
 
-/* ─────────────── MANIFESTO SPLIT ──────────────── */
-.manifesto{display:grid;grid-template-columns:1fr 1fr;min-height:80vh;margin-top:4rem}
-.man-img{position:relative;overflow:hidden}
-.man-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.45) saturate(.4);transition:filter 1.5s}
-.man-img:hover img{filter:brightness(.55) saturate(.5)}
-.man-img-grad{position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,var(–ink))}
-.man-year{position:absolute;bottom:3rem;left:3rem;font-family:‘Bebas Neue’,sans-serif;font-size:6rem;color:rgba(240,235,226,.05);line-height:1;user-select:none}
-.man-content{background:var(–ink);display:flex;flex-direction:column;justify-content:center;padding:7rem 5rem 7rem 6rem}
-.man-eyebrow{font-size:.48rem;letter-spacing:.35em;text-transform:uppercase;color:var(–rust);margin-bottom:2rem;display:flex;align-items:center;gap:.8rem}
-.man-eyebrow::before{content:’’;width:24px;height:1px;background:var(–rust)}
-.man-big{font-family:‘DM Serif Display’,serif;font-size:clamp(2rem,3.5vw,3.5rem);line-height:1.1;font-weight:400;margin-bottom:2.5rem}
-.man-big em{font-style:italic;color:var(–rust)}
-.man-body{font-size:.7rem;line-height:2;color:var(–warm);margin-bottom:3rem;max-width:400px}
-.man-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;border-top:1px solid var(–line);padding-top:2.5rem}
-.ms-n{font-family:‘DM Serif Display’,serif;font-size:2.2rem;color:var(–paper);margin-bottom:.25rem}
-.ms-l{font-size:.44rem;letter-spacing:.18em;text-transform:uppercase;color:var(–warm);line-height:1.4}
-
-/* ─────────────── SERVICES ─────────────────────── */
-.services{padding:8rem 3rem}
-.svc-head{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-bottom:5rem;align-items:end}
-.svc-eyebrow{font-size:.48rem;letter-spacing:.35em;text-transform:uppercase;color:var(–rust);margin-bottom:1.2rem}
-.svc-title{font-family:‘DM Serif Display’,serif;font-size:clamp(2.5rem,4.5vw,5rem);line-height:.95;font-weight:400}
-.svc-title em{font-style:italic}
-.svc-intro{font-size:.7rem;line-height:2;color:var(–warm);max-width:380px;align-self:end}
-.svc-grid{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(–line)}
-.svc-card{padding:2.5rem 1.8rem;border-right:1px solid var(–line);position:relative;overflow:hidden;transition:background .4s;cursor:none}
-.svc-card:last-child{border-right:none}
-.svc-line{position:absolute;top:0;left:0;right:0;height:2px;background:var(–rust);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.16,1,.3,1)}
-.svc-card:hover{background:rgba(196,67,42,.04)}
-.svc-card:hover .svc-line{transform:scaleX(1)}
-.svc-n{font-family:‘Bebas Neue’,sans-serif;font-size:.75rem;letter-spacing:.2em;color:var(–rust);display:block;margin-bottom:2rem}
-.svc-ico{font-size:1.6rem;display:block;margin-bottom:1.2rem}
-.svc-name{font-family:‘DM Serif Display’,serif;font-size:1.15rem;font-weight:400;margin-bottom:1.2rem;line-height:1.2;color:var(–paper)}
-.svc-ul{list-style:none;display:flex;flex-direction:column;gap:.45rem}
-.svc-ul li{font-size:.57rem;color:var(–warm);padding-left:.85rem;position:relative;line-height:1.5}
-.svc-ul li::before{content:‘↳’;position:absolute;left:0;color:var(–rust);font-size:.48rem}
-
-/* ─────────────── PROCESS ──────────────────────── */
-.process{background:var(–paper);color:var(–ink);padding:8rem 3rem;position:relative;overflow:hidden}
-/* Sprocket holes decoration */
-.process::before,.process::after{
-content:’’;position:absolute;top:0;bottom:0;width:38px;
-background:repeating-linear-gradient(180deg,transparent 0,transparent 14px,rgba(6,6,8,.06) 14px,rgba(6,6,8,.06) 22px,transparent 22px,transparent 26px);
-pointer-events:none
+/* ── MANIFESTO ── */
+.manifesto{
+display:grid;grid-template-columns:1fr 1fr;
+min-height:80vh;margin-top:4rem;
 }
-.process::before{left:0}
-.process::after{right:0}
-.proc-eyebrow{font-size:.48rem;letter-spacing:.35em;text-transform:uppercase;color:var(–rust);margin-bottom:1.2rem;display:flex;align-items:center;gap:.8rem}
-.proc-eyebrow::before{content:’’;width:24px;height:1px;background:var(–rust)}
-.proc-title{font-family:‘DM Serif Display’,serif;font-size:clamp(2.2rem,4vw,4rem);font-weight:400;margin-bottom:5rem;line-height:1}
-.proc-title em{font-style:italic;color:var(–rust)}
-.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);position:relative}
-.proc-grid::before{content:’’;position:absolute;top:6px;left:0;right:0;height:1px;background:rgba(6,6,8,.12)}
-.proc-step{padding:2rem 2.5rem 2rem 0}
-.proc-dot{width:12px;height:12px;border:2px solid var(–rust);border-radius:50%;margin-bottom:2rem;background:var(–paper);position:relative;z-index:1}
-.proc-step:hover .proc-dot{background:var(–rust)}
-.proc-num{font-family:‘Bebas Neue’,sans-serif;font-size:4rem;color:rgba(6,6,8,.05);line-height:.85;margin-bottom:1rem}
-.proc-name{font-family:‘DM Serif Display’,serif;font-size:1.3rem;font-weight:400;margin-bottom:1rem;color:var(–ink)}
-.proc-desc{font-size:.63rem;line-height:1.9;color:var(–rust-dim)}
+.man-img{position:relative;overflow:hidden}
+.man-img img{
+width:100%;height:100%;object-fit:cover;display:block;
+filter:brightness(.42) saturate(.4);transition:filter 1.5s;
+}
+.man-img:hover img{filter:brightness(.52) saturate(.5)}
+.man-grad{position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,var(–ink))}
+.man-year{
+position:absolute;bottom:3rem;left:3rem;
+font-family:var(–font-title);font-size:6rem;
+color:rgba(240,235,226,.05);line-height:1;user-select:none;
+}
+.man-content{
+background:var(–ink);
+display:flex;flex-direction:column;justify-content:center;
+padding:7rem 5rem 7rem 6rem;
+}
+.man-eyebrow{
+font-size:.48rem;letter-spacing:.35em;text-transform:uppercase;
+color:var(–rust);margin-bottom:2rem;
+display:flex;align-items:center;gap:.8rem;
+font-family:var(–font-body);font-weight:400;
+}
+.man-eyebrow::before{content:’’;width:24px;height:1px;background:var(–rust)}
+.man-big{
+font-family:var(–font-display);
+font-size:clamp(2rem,3.5vw,3.5rem);line-height:1.1;font-weight:400;
+margin-bottom:2.5rem;
+}
+.man-big em{font-style:italic;color:var(–rust)}
+.man-body{
+font-size:.7rem;line-height:2;color:var(–warm);
+margin-bottom:3rem;max-width:400px;
+font-family:var(–font-body);font-weight:300;
+}
+.man-stats{
+display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;
+border-top:1px solid var(–line);padding-top:2.5rem;
+}
+.ms-n{
+font-family:var(–font-display);
+font-size:2.3rem;color:var(–paper);margin-bottom:.25rem;
+}
+.ms-l{
+font-size:.44rem;letter-spacing:.18em;text-transform:uppercase;
+color:var(–warm);line-height:1.5;
+font-family:var(–font-body);font-weight:300;
+}
 
-/* ─────────────── TESTIMONIAL ──────────────────── */
-.testimonial{padding:9rem 3rem;display:grid;grid-template-columns:auto 1fr;gap:5rem;align-items:center;border-top:1px solid var(–line)}
-.test-side{writing-mode:vertical-lr;transform:rotate(180deg);font-size:.44rem;letter-spacing:.3em;text-transform:uppercase;color:var(–warm)}
-.test-main{}
-.test-q{font-family:‘DM Serif Display’,serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:400;font-style:italic;line-height:1.35;color:var(–paper);margin-bottom:3rem;position:relative;padding-left:1.5rem}
-.test-q::before{content:’”’;position:absolute;left:0;top:-.5rem;font-family:‘DM Serif Display’,serif;font-size:5rem;color:var(–rust);opacity:.25;line-height:1}
+/* ── SERVICES ── */
+.services{padding:8rem 3rem}
+.svc-head{
+display:grid;grid-template-columns:1fr 1fr;gap:4rem;
+margin-bottom:4.5rem;align-items:end;
+}
+.svc-eyebrow{
+font-size:.48rem;letter-spacing:.35em;text-transform:uppercase;
+color:var(–rust);margin-bottom:1rem;
+font-family:var(–font-body);font-weight:400;
+}
+.svc-title{
+font-family:var(–font-display);
+font-size:clamp(2.5rem,4.5vw,5rem);line-height:.95;font-weight:400;
+}
+.svc-title em{font-style:italic}
+.svc-intro{
+font-size:.7rem;line-height:2;color:var(–warm);max-width:380px;
+font-family:var(–font-body);font-weight:300;
+}
+.svc-grid{
+display:grid;grid-template-columns:repeat(5,1fr);
+border:1px solid var(–line);
+}
+.svc-card{
+padding:2.5rem 1.8rem;border-right:1px solid var(–line);
+position:relative;overflow:hidden;transition:background .4s;cursor:none;
+}
+.svc-card:last-child{border-right:none}
+.svc-top-line{
+position:absolute;top:0;left:0;right:0;height:2px;
+background:var(–rust);transform:scaleX(0);transform-origin:left;
+transition:transform .5s cubic-bezier(.16,1,.3,1);
+}
+.svc-card:hover{background:rgba(196,67,42,.04)}
+.svc-card:hover .svc-top-line{transform:scaleX(1)}
+.svc-n{
+font-family:var(–font-title);
+font-size:.75rem;letter-spacing:.2em;color:var(–rust);
+display:block;margin-bottom:2rem;
+}
+.svc-ico{font-size:1.6rem;display:block;margin-bottom:1.2rem;line-height:1}
+.svc-name{
+font-family:var(–font-display);
+font-size:1.15rem;font-weight:400;margin-bottom:1.2rem;line-height:1.2;
+color:var(–paper);
+}
+.svc-ul{list-style:none;display:flex;flex-direction:column;gap:.45rem}
+.svc-ul li{
+font-size:.57rem;color:var(–warm);
+padding-left:.85rem;position:relative;line-height:1.5;
+font-family:var(–font-body);font-weight:300;
+}
+.svc-ul li::before{
+content:‘↳’;position:absolute;left:0;
+color:var(–rust);font-size:.48rem;
+}
+
+/* ── PROCESS ── */
+.process{
+background:var(–paper);color:var(–ink);
+padding:8rem 3rem;position:relative;overflow:hidden;
+}
+.process::before,.process::after{
+content:’’;position:absolute;top:0;bottom:0;width:36px;
+background:repeating-linear-gradient(
+180deg,transparent 0,transparent 14px,
+rgba(6,6,8,.05) 14px,rgba(6,6,8,.05) 22px
+);
+pointer-events:none;
+}
+.process::before{left:0}.process::after{right:0}
+.proc-eyebrow{
+font-size:.48rem;letter-spacing:.35em;text-transform:uppercase;
+color:var(–rust);margin-bottom:1.2rem;
+display:flex;align-items:center;gap:.8rem;
+font-family:var(–font-body);font-weight:400;
+}
+.proc-eyebrow::before{content:’’;width:24px;height:1px;background:var(–rust)}
+.proc-title{
+font-family:var(–font-display);
+font-size:clamp(2.2rem,4vw,4rem);font-weight:400;
+margin-bottom:5rem;line-height:1;
+}
+.proc-title em{font-style:italic;color:var(–rust)}
+.proc-grid{
+display:grid;grid-template-columns:repeat(4,1fr);
+position:relative;
+}
+.proc-grid::before{
+content:’’;position:absolute;top:6px;left:0;right:0;
+height:1px;background:rgba(6,6,8,.1);
+}
+.proc-step{padding:2rem 2.5rem 2rem 0}
+.proc-dot{
+width:12px;height:12px;border:2px solid var(–rust);
+border-radius:50%;margin-bottom:2rem;
+background:var(–paper);position:relative;z-index:1;
+transition:background .3s;
+}
+.proc-step:hover .proc-dot{background:var(–rust)}
+.proc-num{
+font-family:var(–font-title);font-size:4rem;
+color:rgba(6,6,8,.05);line-height:.85;margin-bottom:1rem;
+}
+.proc-name{
+font-family:var(–font-display);font-size:1.3rem;font-weight:400;
+margin-bottom:1rem;color:var(–ink);
+}
+.proc-desc{
+font-size:.63rem;line-height:1.9;color:rgba(196,67,42,.6);
+font-family:var(–font-body);font-weight:300;
+}
+
+/* ── TESTIMONIAL ── */
+.testimonial{
+padding:9rem 3rem;
+display:grid;grid-template-columns:auto 1fr;gap:5rem;
+align-items:center;border-top:1px solid var(–line);
+}
+.test-side{
+writing-mode:vertical-lr;transform:rotate(180deg);
+font-size:.44rem;letter-spacing:.3em;text-transform:uppercase;
+color:var(–warm);font-family:var(–font-body);font-weight:400;
+}
+.test-q{
+font-family:var(–font-display);
+font-size:clamp(1.7rem,3.2vw,2.8rem);font-weight:400;
+font-style:italic;line-height:1.35;color:var(–paper);
+margin-bottom:2.5rem;padding-left:2rem;position:relative;
+}
+.test-q::before{
+content:’”’;position:absolute;left:0;top:-.5rem;
+font-family:var(–font-display);font-size:5rem;
+color:var(–rust);opacity:.2;line-height:1;
+}
 .test-who{display:flex;align-items:center;gap:2rem}
 .test-line{width:40px;height:1px;background:var(–rust)}
-.test-name{font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(–paper)}
-.test-role{font-size:.48rem;letter-spacing:.15em;text-transform:uppercase;color:var(–warm);margin-top:.3rem}
+.test-name{
+font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;
+color:var(–paper);font-family:var(–font-body);font-weight:400;
+}
+.test-role{
+font-size:.46rem;letter-spacing:.15em;text-transform:uppercase;
+color:var(–warm);margin-top:.3rem;
+font-family:var(–font-body);font-weight:300;
+}
 
-/* ─────────────── CTA FINAL ────────────────────── */
-.cta{position:relative;overflow:hidden;padding:10rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+/* ── CTA ── */
+.cta{
+position:relative;overflow:hidden;
+padding:10rem 3rem;
+display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;
+}
 .cta-bg{position:absolute;inset:0}
-.cta-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.1) saturate(.3)}
-.cta-bg::after{content:’’;position:absolute;inset:0;background:linear-gradient(to right,rgba(6,6,8,.7) 0%,rgba(6,6,8,.95) 60%)}
-.cta-l{position:relative;z-index:2}
-.cta-r{position:relative;z-index:2}
-.cta-eyebrow{font-size:.48rem;letter-spacing:.35em;text-transform:uppercase;color:var(–rust);margin-bottom:2rem;display:flex;align-items:center;gap:.8rem}
+.cta-bg img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.1) saturate(.3)}
+.cta-bg::after{
+content:’’;position:absolute;inset:0;
+background:linear-gradient(to right,rgba(6,6,8,.6) 0%,rgba(6,6,8,.96) 55%);
+}
+.cta-l,.cta-r{position:relative;z-index:2}
+.cta-eyebrow{
+font-size:.48rem;letter-spacing:.35em;text-transform:uppercase;
+color:var(–rust);margin-bottom:2rem;
+display:flex;align-items:center;gap:.8rem;
+font-family:var(–font-body);font-weight:400;
+}
 .cta-eyebrow::before{content:’’;width:24px;height:1px;background:var(–rust)}
-.cta-title{font-family:‘DM Serif Display’,serif;font-size:clamp(2.5rem,5vw,5.5rem);font-weight:400;line-height:.97;letter-spacing:-.01em}
+.cta-title{
+font-family:var(–font-display);
+font-size:clamp(2.5rem,5vw,5.5rem);font-weight:400;
+line-height:.97;letter-spacing:-.01em;
+}
 .cta-title em{font-style:italic;color:var(–rust)}
-.cta-body{font-size:.7rem;line-height:2;color:var(–warm);margin-bottom:3rem}
+.cta-body{
+font-size:.7rem;line-height:2;color:var(–warm);
+margin-bottom:3rem;font-family:var(–font-body);font-weight:300;
+}
 .cta-actions{display:flex;flex-direction:column;gap:1rem;align-items:flex-start}
-.cta-wa{display:inline-flex;align-items:center;gap:.8rem;font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:var(–paper);background:var(–rust);padding:1rem 2.2rem;text-decoration:none;transition:background .3s}
+.cta-wa{
+display:inline-flex;align-items:center;gap:.8rem;
+font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;
+color:var(–paper);background:var(–rust);
+padding:1rem 2.2rem;text-decoration:none;transition:background .3s;
+font-family:var(–font-body);font-weight:400;
+}
 .cta-wa:hover{background:#D94E34}
-.cta-em{font-size:.52rem;letter-spacing:.15em;color:var(–warm);text-decoration:none;transition:color .3s;display:flex;align-items:center;gap:.5rem}
+.cta-em{
+font-size:.52rem;letter-spacing:.15em;color:var(–warm);
+text-decoration:none;transition:color .3s;
+display:flex;align-items:center;gap:.5rem;
+font-family:var(–font-body);font-weight:300;
+}
 .cta-em:hover{color:var(–rust)}
-.cta-note{font-size:.5rem;letter-spacing:.08em;color:rgba(138,128,112,.5);margin-top:1.5rem;line-height:1.7}
+.cta-note{
+font-size:.48rem;color:rgba(138,128,112,.45);margin-top:1.5rem;
+line-height:1.7;font-family:var(–font-body);font-weight:300;
+}
 
-/* ─────────────── FOOTER ───────────────────────── */
-footer{background:var(–ink);border-top:1px solid var(–line);padding:3.5rem 3rem;display:grid;grid-template-columns:1.5fr 1fr 1fr auto;gap:3rem;align-items:start}
-.ft-logo-main{font-family:‘Bebas Neue’,sans-serif;font-size:1.3rem;letter-spacing:.15em;color:var(–paper);margin-bottom:.3rem}
-.ft-logo-sub{font-size:.4rem;letter-spacing:.25em;text-transform:uppercase;color:var(–rust)}
-.ft-tagline{font-size:.55rem;line-height:1.7;color:var(–warm);margin-top:1rem;max-width:220px}
-.ft-col-title{font-size:.44rem;letter-spacing:.3em;text-transform:uppercase;color:var(–rust);margin-bottom:1.2rem}
+/* ── FOOTER ── */
+footer{
+background:var(–ink);border-top:1px solid var(–line);
+padding:3.5rem 3rem;
+display:grid;grid-template-columns:1.5fr 1fr 1fr auto;gap:3rem;
+align-items:start;
+}
+.ft-logo-main{
+font-family:var(–font-title);
+font-size:1.3rem;letter-spacing:.15em;color:var(–paper);margin-bottom:.3rem;
+}
+.ft-logo-sub{
+font-size:.4rem;letter-spacing:.25em;text-transform:uppercase;
+color:var(–rust);font-family:var(–font-body);font-weight:400;
+}
+.ft-tagline{
+font-size:.55rem;line-height:1.7;color:var(–warm);
+margin-top:1rem;max-width:220px;
+font-family:var(–font-body);font-weight:300;
+}
+.ft-col-title{
+font-size:.44rem;letter-spacing:.3em;text-transform:uppercase;
+color:var(–rust);margin-bottom:1.2rem;
+font-family:var(–font-body);font-weight:400;
+}
 .ft-links{list-style:none;display:flex;flex-direction:column;gap:.6rem}
-.ft-links a{font-size:.55rem;letter-spacing:.1em;color:var(–warm);text-decoration:none;transition:color .3s}
+.ft-links a{
+font-size:.55rem;letter-spacing:.1em;color:var(–warm);
+text-decoration:none;transition:color .3s;
+font-family:var(–font-body);font-weight:300;
+}
 .ft-links a:hover{color:var(–paper)}
-.ft-copy{font-size:.44rem;letter-spacing:.1em;color:rgba(138,128,112,.35);margin-top:auto;align-self:end}
+.ft-copy{
+font-size:.44rem;letter-spacing:.1em;
+color:rgba(138,128,112,.3);align-self:end;
+font-family:var(–font-body);font-weight:300;
+line-height:1.8;
+}
 
-/* ─────────────── REVEAL ANIM ──────────────────── */
-.rv{opacity:0;transform:translateY(22px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+/* ── REVEAL ── */
+.rv{opacity:0;transform:translateY(20px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
 .rv.on{opacity:1;transform:none}
-.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}.rv.d4{transition-delay:.4s}.rv.d5{transition-delay:.5s}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}
+.rv.d3{transition-delay:.3s}.rv.d4{transition-delay:.4s}
 
-/* ─────────────── RESPONSIVE ───────────────────── */
+/* ── RESPONSIVE ── */
 @media(max-width:1100px){
 .hero{grid-template-columns:1fr}
 .hero-r{display:none}
-.nav-center{display:none}
+.nav-mid{display:none}
 .svc-grid{grid-template-columns:repeat(3,1fr)}
 .svc-card:nth-child(3){border-right:none}
+.svc-card:nth-child(4){border-right:1px solid var(–line)}
 .manifesto{grid-template-columns:1fr}
 .man-img{height:50vw}
 .cta{grid-template-columns:1fr}
 footer{grid-template-columns:1fr 1fr}
 }
-@media(max-width:700px){
+@media(max-width:680px){
 nav{padding:1.2rem 1.5rem}
 .hero-l{padding:7rem 1.5rem 4rem}
-.port-head,.port-track,.drag-cue,.services,.process,.testimonial,.cta{padding-left:1.5rem;padding-right:1.5rem}
+.port-head,.services,.process,.testimonial,.cta,.drag-cue{padding-left:1.5rem;padding-right:1.5rem}
 .port-track{padding-left:1.5rem}
 .svc-grid{grid-template-columns:1fr 1fr}
+.svc-card:nth-child(odd){border-right:1px solid var(–line)}
 .svc-card:nth-child(even){border-right:none}
-.proc-grid{grid-template-columns:repeat(2,1fr)}
+.proc-grid{grid-template-columns:1fr 1fr}
 .testimonial{grid-template-columns:1fr}
-.test-side{writing-mode:horizontal-tb;transform:none;margin-bottom:1rem}
-.cta{padding:6rem 1.5rem}
-.pi:nth-child(n){width:80vw;height:60vw;min-height:320px}
+.test-side{writing-mode:horizontal-tb;transform:none}
 footer{grid-template-columns:1fr;padding:2.5rem 1.5rem}
+.pi{height:70vw;min-height:300px}
+.pi:nth-child(n){width:80vw}
 body{cursor:auto}
-#cur,#cur-txt{display:none}
+#cur{display:none}
 }
 </style>
 
@@ -270,85 +659,79 @@ body{cursor:auto}
 <body>
 
 <div id="cur"></div>
-<div id="cur-txt">VER</div>
 
 <!-- NAV -->
 
-<nav>
-  <div class="nav-bg"></div>
+<nav id="nav">
+  <div class="nav-bg" id="navBg"></div>
   <a href="#" class="logo">
-    <span class="logo-main">AURA & VOID</span>
+    <span class="logo-main">AURA &amp; VOID</span>
     <span class="logo-sub">Laboratorio Audiovisual Inmobiliario</span>
   </a>
-  <div class="nav-center">
+  <div class="nav-mid">
     <a href="#portfolio" class="nav-link">Portfolio</a>
     <a href="#servicios" class="nav-link">Servicios</a>
     <a href="#proceso" class="nav-link">Proceso</a>
     <a href="#contacto" class="nav-link">Contacto</a>
   </div>
-  <div class="nav-right">
-    <a href="https://wa.me/34600000000" class="nav-cta">Iniciar Proyecto</a>
-  </div>
+  <a href="https://wa.me/34600000000" class="nav-cta">Iniciar Proyecto</a>
 </nav>
 
 <!-- HERO -->
 
 <section class="hero">
   <div class="hero-l">
-    <div class="hero-big-num">A&V</div>
-    <p class="h-eyebrow">Ingeniería Psicológica Inmobiliaria</p>
-    <h1 class="hero-h1">
-      No mostramos<br>
-      propiedades.<br>
-      Creamos <em>deseo.</em>
-    </h1>
+    <div class="hero-ghost">A&amp;V</div>
+    <p class="hero-eyebrow">Ingeniería Psicológica Inmobiliaria</p>
+    <h1 class="hero-h1">No mostramos<br>propiedades.<br>Creamos <em>deseo.</em></h1>
     <p class="hero-p">Producción audiovisual cinematográfica, campañas de precisión e inteligencia artificial al servicio del inmobiliario de lujo.</p>
     <div class="hero-btns">
       <a href="#portfolio" class="btn-main">↓ Ver Portfolio</a>
-      <a href="#contacto" class="btn-ghost">Iniciar proyecto <span>→</span></a>
+      <a href="#contacto" class="btn-ghost">Iniciar proyecto →</a>
     </div>
   </div>
 
-  <!-- Animated reel strips, right side -->
-
   <div class="hero-r">
+    <!-- Row 1 -->
     <div class="reel-row">
       <div class="reel-inner">
-        <div class="reel-cell" style="width:220px;height:100%"><img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?w=500&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:180px;height:100%"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=400&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:240px;height:100%"><img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?w=500&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:200px;height:100%"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=400&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:220px;height:100%"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&auto=format&fit=crop" alt=""></div>
-        <!-- repeat -->
-        <div class="reel-cell" style="width:220px;height:100%"><img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?w=500&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:180px;height:100%"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=400&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:240px;height:100%"><img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?w=500&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:200px;height:100%"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=400&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:220px;height:100%"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:220px"><img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?w=440&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:180px"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=360&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:240px"><img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?w=480&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:190px"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=380&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:210px"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=420&auto=format&fit=crop" alt=""></div>
+        <!-- duplicate for seamless loop -->
+        <div class="reel-cell" style="width:220px"><img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?w=440&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:180px"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=360&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:240px"><img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?w=480&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:190px"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=380&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:210px"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=420&auto=format&fit=crop" alt=""></div>
       </div>
     </div>
+    <!-- Row 2 -->
     <div class="reel-row">
       <div class="reel-inner">
-        <div class="reel-cell" style="width:200px;height:100%"><img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?w=400&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:240px;height:100%"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:190px;height:100%"><img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?w=400&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:230px;height:100%"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=500&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:200px;height:100%"><img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?w=400&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:240px;height:100%"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:190px;height:100%"><img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?w=400&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:230px;height:100%"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=500&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:200px"><img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?w=400&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:250px"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:200px"><img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?w=400&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:220px"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=440&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:200px"><img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?w=400&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:250px"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:200px"><img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?w=400&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:220px"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=440&auto=format&fit=crop" alt=""></div>
       </div>
     </div>
+    <!-- Row 3 -->
     <div class="reel-row">
       <div class="reel-inner">
-        <div class="reel-cell" style="width:230px;height:100%"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=500&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:190px;height:100%"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=400&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:210px;height:100%"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=450&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:250px;height:100%"><img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?w=500&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:230px;height:100%"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=500&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:190px;height:100%"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=400&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:210px;height:100%"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=450&auto=format&fit=crop" alt=""></div>
-        <div class="reel-cell" style="width:250px;height:100%"><img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?w=500&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:230px"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=460&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:190px"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=380&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:240px"><img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?w=480&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:200px"><img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?w=400&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:230px"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=460&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:190px"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=380&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:240px"><img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?w=480&auto=format&fit=crop" alt=""></div>
+        <div class="reel-cell" style="width:200px"><img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?w=400&auto=format&fit=crop" alt=""></div>
       </div>
     </div>
   </div>
@@ -361,16 +744,15 @@ body{cursor:auto}
     <span class="t-item">Producción Audiovisual</span><span class="t-item t-sep">◆</span>
     <span class="t-item">Precision Marketing</span><span class="t-item t-sep">◆</span>
     <span class="t-item">Virtual Tours 360°</span><span class="t-item t-sep">◆</span>
-    <span class="t-item">IA & Automatización</span><span class="t-item t-sep">◆</span>
+    <span class="t-item">IA &amp; Automatización</span><span class="t-item t-sep">◆</span>
     <span class="t-item">Branding de Lujo</span><span class="t-item t-sep">◆</span>
     <span class="t-item">Geo-fencing Premium</span><span class="t-item t-sep">◆</span>
     <span class="t-item">Eventos Exclusivos</span><span class="t-item t-sep">◆</span>
     <span class="t-item">Renders 3D</span><span class="t-item t-sep">◆</span>
-    <!-- repeat -->
     <span class="t-item">Producción Audiovisual</span><span class="t-item t-sep">◆</span>
     <span class="t-item">Precision Marketing</span><span class="t-item t-sep">◆</span>
     <span class="t-item">Virtual Tours 360°</span><span class="t-item t-sep">◆</span>
-    <span class="t-item">IA & Automatización</span><span class="t-item t-sep">◆</span>
+    <span class="t-item">IA &amp; Automatización</span><span class="t-item t-sep">◆</span>
     <span class="t-item">Branding de Lujo</span><span class="t-item t-sep">◆</span>
     <span class="t-item">Geo-fencing Premium</span><span class="t-item t-sep">◆</span>
     <span class="t-item">Eventos Exclusivos</span><span class="t-item t-sep">◆</span>
@@ -382,19 +764,18 @@ body{cursor:auto}
 
 <section class="portfolio" id="portfolio">
   <div class="port-head rv">
-    <div class="port-title-block">
+    <div>
       <p class="port-eyebrow">Trabajos Audiovisuales</p>
       <h2 class="port-title">Proyectos <em>reales.</em><br>Resultados reales.</h2>
     </div>
-    <a href="#contacto" class="port-all">Ver todos los trabajos →</a>
+    <a href="#contacto" class="port-all">Ver todos →</a>
   </div>
 
   <div class="port-scroll" id="portScroll">
     <div class="port-track" id="portTrack">
 
 ```
-  <!-- 1 -->
-  <div class="pi" style="cursor:none">
+  <div class="pi">
     <img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?q=85&w=1000&auto=format&fit=crop" alt="Villa Meridiana">
     <div class="pi-always">
       <span class="pi-idx">01 / 06</span>
@@ -405,9 +786,7 @@ body{cursor:auto}
       </div>
     </div>
     <div class="pi-hover">
-      <div class="pi-play">
-        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-      </div>
+      <div class="pi-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       <div class="pi-pills">
         <span class="pi-pill">Vídeo Cinematic</span>
         <span class="pi-pill">Fotografía Aérea</span>
@@ -417,21 +796,18 @@ body{cursor:auto}
     </div>
   </div>
 
-  <!-- 2 -->
   <div class="pi">
     <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=85&w=800&auto=format&fit=crop" alt="Palacio Ensenada">
     <div class="pi-always">
       <span class="pi-idx">02 / 06</span>
       <div class="pi-bottom">
-        <p class="pi-tag">Madrid · Branding & Launch</p>
+        <p class="pi-tag">Madrid · Branding &amp; Launch</p>
         <h3 class="pi-name">Palacio Ensenada</h3>
         <p class="pi-loc">Barrio de Salamanca, Madrid</p>
       </div>
     </div>
     <div class="pi-hover">
-      <div class="pi-play">
-        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-      </div>
+      <div class="pi-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       <div class="pi-pills">
         <span class="pi-pill">Brand Film</span>
         <span class="pi-pill">Brochure de Lujo</span>
@@ -440,7 +816,6 @@ body{cursor:auto}
     </div>
   </div>
 
-  <!-- 3 -->
   <div class="pi">
     <img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?q=85&w=900&auto=format&fit=crop" alt="Ático Sōlara">
     <div class="pi-always">
@@ -452,9 +827,7 @@ body{cursor:auto}
       </div>
     </div>
     <div class="pi-hover">
-      <div class="pi-play">
-        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-      </div>
+      <div class="pi-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       <div class="pi-pills">
         <span class="pi-pill">Drone 8K</span>
         <span class="pi-pill">Lifestyle Shoot</span>
@@ -464,7 +837,6 @@ body{cursor:auto}
     </div>
   </div>
 
-  <!-- 4 -->
   <div class="pi">
     <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=85&w=700&auto=format&fit=crop" alt="Casas del Viento">
     <div class="pi-always">
@@ -476,18 +848,15 @@ body{cursor:auto}
       </div>
     </div>
     <div class="pi-hover">
-      <div class="pi-play">
-        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-      </div>
+      <div class="pi-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       <div class="pi-pills">
         <span class="pi-pill">Cinematic Film</span>
         <span class="pi-pill">Geo-fencing</span>
-        <span class="pi-pill">Open House Event</span>
+        <span class="pi-pill">Open House</span>
       </div>
     </div>
   </div>
 
-  <!-- 5 -->
   <div class="pi">
     <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=85&w=1000&auto=format&fit=crop" alt="Finca Nomadea">
     <div class="pi-always">
@@ -499,19 +868,15 @@ body{cursor:auto}
       </div>
     </div>
     <div class="pi-hover">
-      <div class="pi-play">
-        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-      </div>
+      <div class="pi-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       <div class="pi-pills">
         <span class="pi-pill">Vídeo Aéreo 4K</span>
         <span class="pi-pill">Tour Virtual</span>
-        <span class="pi-pill">Branding</span>
         <span class="pi-pill">Google Ads</span>
       </div>
     </div>
   </div>
 
-  <!-- 6 -->
   <div class="pi">
     <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=85&w=850&auto=format&fit=crop" alt="Torre Cimbre">
     <div class="pi-always">
@@ -523,9 +888,7 @@ body{cursor:auto}
       </div>
     </div>
     <div class="pi-hover">
-      <div class="pi-play">
-        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-      </div>
+      <div class="pi-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       <div class="pi-pills">
         <span class="pi-pill">AI Video</span>
         <span class="pi-pill">Infoarquitectura</span>
@@ -534,10 +897,10 @@ body{cursor:auto}
     </div>
   </div>
 
-</div><!-- /port-track -->
+</div>
 ```
 
-  </div><!-- /port-scroll -->
+  </div>
 
   <div class="drag-cue rv">
     <span>Arrastra para explorar</span>
@@ -550,20 +913,14 @@ body{cursor:auto}
 
 <section class="manifesto">
   <div class="man-img">
-    <img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?q=85&w=1000&auto=format&fit=crop" alt="Arquitectura">
-    <div class="man-img-grad"></div>
+    <img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?q=85&w=1000&auto=format&fit=crop" alt="">
+    <div class="man-grad"></div>
     <div class="man-year">2018</div>
   </div>
   <div class="man-content">
     <p class="man-eyebrow rv">Quiénes Somos</p>
-    <h2 class="man-big rv">
-      Donde el inmobiliario<br>
-      de lujo encuentra<br>
-      su <em>historia.</em>
-    </h2>
-    <p class="man-body rv">
-      AURA & VOID nació de una convicción: el mercado de lujo no se gana con datos. Se gana con emoción, narrativa e imágenes que paran el tiempo. Somos un laboratorio de producción y estrategia que combina cinematografía de alta gama, inteligencia artificial y campañas de precisión milimétrica para posicionar propiedades extraordinarias ante los compradores exactos que las merecen.
-    </p>
+    <h2 class="man-big rv">Donde el inmobiliario<br>de lujo encuentra<br>su <em>historia.</em></h2>
+    <p class="man-body rv">AURA &amp; VOID nació de una convicción: el mercado de lujo no se gana con datos. Se gana con emoción, narrativa e imágenes que paran el tiempo. Somos un laboratorio de producción y estrategia que combina cinematografía de alta gama, inteligencia artificial y campañas de precisión milimétrica para posicionar propiedades extraordinarias ante los compradores exactos que las merecen.</p>
     <div class="man-stats rv d2">
       <div><p class="ms-n">+€2B</p><p class="ms-l">En activos posicionados</p></div>
       <div><p class="ms-n">340+</p><p class="ms-l">Proyectos completados</p></div>
@@ -583,66 +940,11 @@ body{cursor:auto}
     <p class="svc-intro rv">Cada propiedad es una historia diferente. Diseñamos la estrategia, producimos el contenido y activamos las campañas — todo bajo un mismo techo, con un único objetivo: vender más rápido y a mejor precio.</p>
   </div>
   <div class="svc-grid rv">
-    <div class="svc-card">
-      <div class="svc-line"></div>
-      <span class="svc-n">01</span>
-      <span class="svc-ico">◈</span>
-      <h3 class="svc-name">Producción Audiovisual</h3>
-      <ul class="svc-ul">
-        <li>Lifestyle & Narrativa Visual</li>
-        <li>Fotografía Arquitectónica</li>
-        <li>VR & Virtual Tours 360°</li>
-        <li>Renders 3D e Infoarquitectura</li>
-      </ul>
-    </div>
-    <div class="svc-card">
-      <div class="svc-line"></div>
-      <span class="svc-n">02</span>
-      <span class="svc-ico">◎</span>
-      <h3 class="svc-name">Precision Marketing</h3>
-      <ul class="svc-ul">
-        <li>Campañas Hipersegmentadas</li>
-        <li>Publicidad Programática</li>
-        <li>Geo-fencing Premium</li>
-        <li>SEO & SEM Performance</li>
-      </ul>
-    </div>
-    <div class="svc-card">
-      <div class="svc-line"></div>
-      <span class="svc-n">03</span>
-      <span class="svc-ico">◆</span>
-      <h3 class="svc-name">IA & Automatización</h3>
-      <ul class="svc-ul">
-        <li>Optimización con IA</li>
-        <li>AI Video Creation</li>
-        <li>Marketing Automation</li>
-        <li>Predictive Analytics</li>
-      </ul>
-    </div>
-    <div class="svc-card">
-      <div class="svc-line"></div>
-      <span class="svc-n">04</span>
-      <span class="svc-ico">◉</span>
-      <h3 class="svc-name">Branding & Digital PR</h3>
-      <ul class="svc-ul">
-        <li>Storytelling & Narrativa</li>
-        <li>Diseño Web Inmersivo</li>
-        <li>Redes Sociales Premium</li>
-        <li>Relaciones Públicas</li>
-      </ul>
-    </div>
-    <div class="svc-card">
-      <div class="svc-line"></div>
-      <span class="svc-n">05</span>
-      <span class="svc-ico">◇</span>
-      <h3 class="svc-name">Physical & Events</h3>
-      <ul class="svc-ul">
-        <li>Catálogos de Lujo</li>
-        <li>Open Houses Premium</li>
-        <li>Eventos Inmobiliarios</li>
-        <li>Material de Ventas</li>
-      </ul>
-    </div>
+    <div class="svc-card"><div class="svc-top-line"></div><span class="svc-n">01</span><span class="svc-ico">◈</span><h3 class="svc-name">Producción Audiovisual</h3><ul class="svc-ul"><li>Lifestyle &amp; Narrativa Visual</li><li>Fotografía Arquitectónica</li><li>VR &amp; Virtual Tours 360°</li><li>Renders 3D e Infoarquitectura</li></ul></div>
+    <div class="svc-card"><div class="svc-top-line"></div><span class="svc-n">02</span><span class="svc-ico">◎</span><h3 class="svc-name">Precision Marketing</h3><ul class="svc-ul"><li>Campañas Hipersegmentadas</li><li>Publicidad Programática</li><li>Geo-fencing Premium</li><li>SEO &amp; SEM Performance</li></ul></div>
+    <div class="svc-card"><div class="svc-top-line"></div><span class="svc-n">03</span><span class="svc-ico">◆</span><h3 class="svc-name">IA &amp; Automatización</h3><ul class="svc-ul"><li>Optimización con IA</li><li>AI Video Creation</li><li>Marketing Automation</li><li>Predictive Analytics</li></ul></div>
+    <div class="svc-card"><div class="svc-top-line"></div><span class="svc-n">04</span><span class="svc-ico">◉</span><h3 class="svc-name">Branding &amp; Digital PR</h3><ul class="svc-ul"><li>Storytelling &amp; Narrativa</li><li>Diseño Web Inmersivo</li><li>Redes Sociales Premium</li><li>Relaciones Públicas</li></ul></div>
+    <div class="svc-card"><div class="svc-top-line"></div><span class="svc-n">05</span><span class="svc-ico">◇</span><h3 class="svc-name">Physical &amp; Events</h3><ul class="svc-ul"><li>Catálogos de Lujo</li><li>Open Houses Premium</li><li>Eventos Inmobiliarios</li><li>Material de Ventas</li></ul></div>
   </div>
 </section>
 
@@ -652,30 +954,10 @@ body{cursor:auto}
   <p class="proc-eyebrow rv">Cómo Trabajamos</p>
   <h2 class="proc-title rv">El <em>proceso</em><br>que genera resultados.</h2>
   <div class="proc-grid">
-    <div class="proc-step rv">
-      <div class="proc-dot"></div>
-      <div class="proc-num">01</div>
-      <h3 class="proc-name">Diagnóstico Estratégico</h3>
-      <p class="proc-desc">Analizamos la propiedad, el mercado objetivo y la brecha entre percepción actual y potencial de deseo. Definimos el arquetipo exacto del comprador ideal.</p>
-    </div>
-    <div class="proc-step rv d1">
-      <div class="proc-dot"></div>
-      <div class="proc-num">02</div>
-      <h3 class="proc-name">Arquitectura Narrativa</h3>
-      <p class="proc-desc">Construimos la historia de la propiedad. No sus metros cuadrados. Su estilo de vida. La promesa emocional que activa en el comprador correcto.</p>
-    </div>
-    <div class="proc-step rv d2">
-      <div class="proc-dot"></div>
-      <div class="proc-num">03</div>
-      <h3 class="proc-name">Producción & Activación</h3>
-      <p class="proc-desc">Producción audiovisual cinematográfica. Lanzamiento simultáneo en todos los canales premium. Campañas de precisión activadas desde el día uno.</p>
-    </div>
-    <div class="proc-step rv d3">
-      <div class="proc-dot"></div>
-      <div class="proc-num">04</div>
-      <h3 class="proc-name">Optimización Continua</h3>
-      <p class="proc-desc">IA y data analytics en tiempo real. Ajustamos, escalamos y refinamos hasta que el comprador correcto no pueda resistirse a dar el paso.</p>
-    </div>
+    <div class="proc-step rv"><div class="proc-dot"></div><div class="proc-num">01</div><h3 class="proc-name">Diagnóstico Estratégico</h3><p class="proc-desc">Analizamos la propiedad, el mercado objetivo y la brecha entre percepción actual y potencial de deseo. Definimos el arquetipo exacto del comprador ideal.</p></div>
+    <div class="proc-step rv d1"><div class="proc-dot"></div><div class="proc-num">02</div><h3 class="proc-name">Arquitectura Narrativa</h3><p class="proc-desc">Construimos la historia de la propiedad. No sus metros cuadrados. Su estilo de vida. La promesa emocional que activa en el comprador correcto.</p></div>
+    <div class="proc-step rv d2"><div class="proc-dot"></div><div class="proc-num">03</div><h3 class="proc-name">Producción &amp; Activación</h3><p class="proc-desc">Producción audiovisual cinematográfica. Lanzamiento simultáneo en todos los canales premium. Campañas de precisión activadas desde el día uno.</p></div>
+    <div class="proc-step rv d3"><div class="proc-dot"></div><div class="proc-num">04</div><h3 class="proc-name">Optimización Continua</h3><p class="proc-desc">IA y data analytics en tiempo real. Ajustamos, escalamos y refinamos hasta que el comprador correcto no pueda resistirse a dar el paso.</p></div>
   </div>
 </section>
 
@@ -683,10 +965,8 @@ body{cursor:auto}
 
 <section class="testimonial rv">
   <div class="test-side">Clientes</div>
-  <div class="test-main">
-    <blockquote class="test-q">
-      AURA & VOID no solo vendió nuestra promoción — redefinió cómo el mercado la percibía. El precio final superó en un 23% nuestras previsiones más optimistas.
-    </blockquote>
+  <div>
+    <blockquote class="test-q">AURA &amp; VOID no solo vendió nuestra promoción — redefinió cómo el mercado la percibía. El precio final superó en un 23% nuestras previsiones más optimistas.</blockquote>
     <div class="test-who">
       <div class="test-line"></div>
       <div>
@@ -700,23 +980,15 @@ body{cursor:auto}
 <!-- CTA -->
 
 <section class="cta" id="contacto">
-  <div class="cta-bg">
-    <img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?q=80&w=1600&auto=format&fit=crop" alt="">
-  </div>
+  <div class="cta-bg"><img src="https://images.unsplash.com/photo-1613490908674-d4764d84f046?q=80&w=1600&auto=format&fit=crop" alt=""></div>
   <div class="cta-l rv">
     <p class="cta-eyebrow">Empecemos</p>
-    <h2 class="cta-title">
-      Su propiedad<br>
-      merece ser<br>
-      <em>deseada.</em>
-    </h2>
+    <h2 class="cta-title">Su propiedad<br>merece ser<br><em>deseada.</em></h2>
   </div>
   <div class="cta-r rv d2">
     <p class="cta-body">Trabajamos con un número limitado de proyectos cada trimestre para garantizar excelencia absoluta. Si tiene una propiedad o desarrollo que merece posicionamiento de primer nivel mundial, queremos conocerlo.</p>
     <div class="cta-actions">
-      <a href="https://wa.me/34600000000?text=Hola,%20me%20gustaría%20información%20sobre%20Aura%20%26%20Void" class="cta-wa">
-        ↗ Hablar por WhatsApp
-      </a>
+      <a href="https://wa.me/34600000000?text=Hola,%20me%20gustar%C3%ADa%20informaci%C3%B3n%20sobre%20Aura%20%26%20Void" class="cta-wa">↗ Hablar por WhatsApp</a>
       <a href="mailto:hola@auravoid.com" class="cta-em">hola@auravoid.com →</a>
     </div>
     <p class="cta-note">Plazas limitadas por trimestre. Actualmente aceptando proyectos para Q3 2026.</p>
@@ -727,7 +999,7 @@ body{cursor:auto}
 
 <footer>
   <div>
-    <div class="ft-logo-main">AURA & VOID</div>
+    <div class="ft-logo-main">AURA &amp; VOID</div>
     <div class="ft-logo-sub">Laboratorio Audiovisual Inmobiliario</div>
     <p class="ft-tagline">Ingeniería psicológica al servicio del inmobiliario de lujo.</p>
   </div>
@@ -749,67 +1021,44 @@ body{cursor:auto}
       <li><a href="#">LinkedIn</a></li>
     </ul>
   </div>
-  <div class="ft-copy">
-    © 2026 AURA & VOID<br>Todos los derechos reservados.
-  </div>
+  <div class="ft-copy">© 2026 AURA &amp; VOID<br>Todos los derechos reservados.</div>
 </footer>
 
 <script>
-// ─── CURSOR ──────────────────────────────────────
-const cur = document.getElementById('cur');
-const curTxt = document.getElementById('cur-txt');
-let mx=0,my=0;
+// CURSOR
+const cur=document.getElementById('cur');
 document.addEventListener('mousemove',e=>{
-  mx=e.clientX; my=e.clientY;
-  cur.style.left=mx+'px'; cur.style.top=my+'px';
-  curTxt.style.left=mx+'px'; curTxt.style.top=my+'px';
-});
-document.querySelectorAll('.pi,.port-all,.btn-main,.btn-ghost,.nav-cta,.cta-wa,.svc-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.classList.add('expand');curTxt.textContent=el.dataset.label||'VER'});
-  el.addEventListener('mouseleave',()=>cur.classList.remove('expand'));
-});
-
-// ─── SCROLL REVEAL ─────────────────────────────────
-const rvEls=document.querySelectorAll('.rv');
-const rvObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');rvObs.unobserve(e.target)}});
-},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-rvEls.forEach(el=>rvObs.observe(el));
-
-// ─── PORTFOLIO DRAG SCROLL ──────────────────────────
-const scroll=document.getElementById('portScroll');
-const track=document.getElementById('portTrack');
-let isDragging=false,startX=0,scrollLeft=0;
-scroll.addEventListener('mousedown',e=>{
-  isDragging=true; startX=e.pageX-scroll.offsetLeft;
-  scrollLeft=scroll.scrollLeft; scroll.style.userSelect='none';
-});
-document.addEventListener('mouseup',()=>{isDragging=false;scroll.style.userSelect=''});
-document.addEventListener('mousemove',e=>{
-  if(!isDragging)return;
-  e.preventDefault();
-  const x=e.pageX-scroll.offsetLeft;
-  scroll.scrollLeft=scrollLeft-(x-startX)*1.2;
-});
-// touch
-scroll.addEventListener('touchstart',e=>{startX=e.touches[0].pageX;scrollLeft=scroll.scrollLeft},{passive:true});
-scroll.addEventListener('touchmove',e=>{
-  const x=e.touches[0].pageX;
-  scroll.scrollLeft=scrollLeft-(x-startX)*1.1;
+  cur.style.left=e.clientX+'px';
+  cur.style.top=e.clientY+'px';
 },{passive:true});
+document.querySelectorAll('a,button,.pi,.svc-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
+});
 
-// ─── NAV SCROLL ────────────────────────────────────
+// NAV scroll
 window.addEventListener('scroll',()=>{
-  const nb=document.querySelector('.nav-bg');
-  if(window.scrollY>80){
-    nb.style.background='rgba(6,6,8,.96)';
-    nb.style.backdropFilter='blur(16px)';
-    nb.style.transition='background .4s';
-  }else{
-    nb.style.background='';
-    nb.style.backdropFilter='';
-  }
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>80);
 },{passive:true});
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}});
+},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+// PORTFOLIO DRAG
+const ps=document.getElementById('portScroll');
+let dragging=false,sx=0,sl=0;
+ps.addEventListener('mousedown',e=>{dragging=true;sx=e.pageX-ps.offsetLeft;sl=ps.scrollLeft;ps.style.cursor='grabbing'});
+document.addEventListener('mouseup',()=>{dragging=false;ps.style.cursor='none'});
+document.addEventListener('mousemove',e=>{
+  if(!dragging)return;
+  e.preventDefault();
+  ps.scrollLeft=sl-(e.pageX-ps.offsetLeft-sx)*1.2;
+},{passive:false});
+ps.addEventListener('touchstart',e=>{sx=e.touches[0].pageX;sl=ps.scrollLeft},{passive:true});
+ps.addEventListener('touchmove',e=>{ps.scrollLeft=sl-(e.touches[0].pageX-sx)*1.1},{passive:true});
 </script>
 
 </body>
